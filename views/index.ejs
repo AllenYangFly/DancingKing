@@ -1,0 +1,53 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div id="container-wrap">
+    <div id="m-container">        
+        <div class="m-progress">
+            <span class="time">00:00</span>
+            <canvas></canvas>
+            <span class="bot">
+                <em></em>
+            </span>
+            <p></p>
+        </div>
+
+        <div id="title">周杰伦 - 前世情人</div>
+
+        <div class="m-control">
+            <div class="prev"></div>
+            <div class="play"></div>
+            <div class="next"></div>
+        </div>
+
+        <div class="m-list">
+        </div>
+
+    </div>
+</div>
+
+<link href="/stylesheets/style.css" rel="stylesheet">
+<script src="/javascripts/jQuery-1.7.1.js"></script>
+
+<script src="/javascripts/player.js"></script>
+<script src="/javascripts/play.js"></script>
+
+<script>
+    window.onload = function() {
+        var mList = document.querySelector('.m-list');
+        var listString = '';
+
+        fetch('/get_files').then(function(response) {
+            return response.json()
+        }).then(function(data) {
+            for(var i=0; i<data.length; i++) {
+                Player.add(data[i], '/music/' + data[i]);
+                listString += '<p class="item" id="'+i+'">'+data[i]+'</p>';
+            }
+            mList.innerHTML = listString;
+        }).catch(function(e) {
+            alert("Oops, error");
+        });
+    }
+</script>
